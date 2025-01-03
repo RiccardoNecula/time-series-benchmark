@@ -1,3 +1,7 @@
 #define dependencies
 
 pandas >= 2.0.1
+
+tensorflow == 2.7.0
+keras == 2.7.0
+protobuf == 3.20.3

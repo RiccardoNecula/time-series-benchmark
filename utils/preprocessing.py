@@ -1,6 +1,6 @@
 import pandas as pd
 
-#nessun dato mancante nei dataset
+#no missing values in the datasets
 """
 def fill_missing_values(data, method='mean'):
     if method == 'mean':
@@ -17,3 +17,7 @@ def fill_missing_values(data, method='mean'):
 
 def normalize(data):
     return (data - data.min()) / (data.max() - data.min())
+
+#if lstm model is used (multivariate)
+def standardize(data):
+    return (data - data.mean()) / data.std()
