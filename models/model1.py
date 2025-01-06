@@ -159,7 +159,6 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-
 """
 
 from tensorflow.python.keras.models import Sequential

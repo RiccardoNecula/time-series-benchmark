@@ -28,9 +28,9 @@ print("\nNvida:", nvidia_data.shape)
 print("Rainfall:", rainfall_data.shape)
 print("Rou Tourism:", tourism_data.shape, "\n")
 
-#Separate dates for future plotting because multivariate
+#separate dates for future plotting because multivariate
 train_dates = pd.to_datetime(nvidia_data['Date'])
-print(train_dates.tail(15)) #Check last few dates.
+print(train_dates.tail(15)) #check last few dates.
 
 #normalize(nvidia_data)
 #normalize(rainfall_data)
