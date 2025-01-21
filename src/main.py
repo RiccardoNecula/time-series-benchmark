@@ -2,7 +2,7 @@
 import warnings
 import pandas as pd
 from datasets import load_nvidia_data, load_rainfall_data, load_romaniaTourism_data
-from utils import normalize
+from preprocessing import normalize
 
 warnings.filterwarnings("ignore")
 
@@ -11,19 +11,19 @@ rainfall_data = load_rainfall_data()
 tourism_data = load_romaniaTourism_data()
 
 
-#verify if data is correctly read
+#verify if preprocessing is correctly read
 print(nvidia_data.head(), "\n")
 print(rainfall_data.head(), "\n")
 print(tourism_data.head(), "\n")
 
-#general data info
+#general preprocessing info
 nvidia_data.info()
 print("\n------------\n")
 rainfall_data.info()
 print("\n------------\n")
 tourism_data.info()
 
-#data dim
+#preprocessing dim
 print("\nNvida:", nvidia_data.shape)
 print("Rainfall:", rainfall_data.shape)
 print("Rou Tourism:", tourism_data.shape, "\n")

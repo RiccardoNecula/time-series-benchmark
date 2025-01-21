@@ -27,7 +27,7 @@ cols = list(nvidia_data)[1:6]
 # Date and volume columns are not used in training.
 print(cols)  # ['Open', 'High', 'Low', 'Close', 'Adj Close']
 
-# New dataframe with only training data - 5 columns
+# New dataframe with only training preprocessing - 5 columns
 df_for_training = nvidia_data[cols].astype(float)
 
 # df_for_plot=df_for_training.tail(500)
@@ -39,19 +39,19 @@ scaler = StandardScaler()
 scaler = scaler.fit(df_for_training)
 df_for_training_scaled = scaler.transform(df_for_training)
 
-# As required for LSTM networks, we require to reshape an input data into n_samples x timesteps x n_features.
-# In this example, the n_features is 5. We will make timesteps = 14 (past days data used for training).
+# As required for LSTM networks, we require to reshape an input preprocessing into n_samples x timesteps x n_features.
+# In this example, the n_features is 5. We will make timesteps = 14 (past days preprocessing used for training).
 
-# Empty lists to be populated using formatted training data
+# Empty lists to be populated using formatted training preprocessing
 trainX = []
 trainY = []
 
 n_future = 1  # Number of days we want to look into the future based on the past days.
 n_past = 14  # Number of past days we want to use to predict the future.
 
-# Reformat input data into a shape: (n_samples x timesteps x n_features)
+# Reformat input preprocessing into a shape: (n_samples x timesteps x n_features)
 # In my example, my df_for_training_scaled has a shape (1260, 5)
-# 1246 refers to the number of data points and 5 refers to the columns (multi-variables). #mine 1260
+# 1246 refers to the number of preprocessing points and 5 refers to the columns (multi-variables). #mine 1260
 for i in range(n_past, len(df_for_training_scaled) - n_future + 1):
     trainX.append(df_for_training_scaled[i - n_past:i, 0:df_for_training.shape[1]])
     trainY.append(df_for_training_scaled[i + n_future - 1:i + n_future, 0])
@@ -66,7 +66,7 @@ print('trainY shape == {}.'.format(trainY.shape))
 # Remember that we cannot look back 14 days until we get to the 15th day.
 # Also, trainY has a shape (1248, 1). Our model only predicts a single value, but
 # it needs multiple variables (5 in my example) to make this prediction.
-# This is why we can only predict a single day after our training, the day after where our data ends.
+# This is why we can only predict a single day after our training, the day after where our preprocessing ends.
 # To predict more days in future, we need all the 5 variables which we do not have.
 # We need to predict all variables if we want to do that.
 

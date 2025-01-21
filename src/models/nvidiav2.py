@@ -8,7 +8,13 @@ from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.optimizers import Adam
 from datasets import load_nvidia_data
 
-#This actual state, model predicts on historical text data. Working on predicting on future data [part]
+#This actual state, model predicts on both historical text preprocessing and does also predictions on future days
+
+#Still needed:
+# - Here -> missing print best metrics after epochs
+# - apply LSTM on other datasets
+# - refine hyperparams for all datasets performance
+# - divide all parts (preprocessing, hyperparams, visualization, saving performances for showcase) into their repos and import them
 
 nvidia_data = load_nvidia_data()
 
@@ -21,6 +27,7 @@ print(nvidia_data.isna().sum(), "\n")
 
 print(nvidia_data.info(), "\n")
 """
+
 
 #converting "Date" col into "datetime"
 nvidia_data["Date"] = pd.to_datetime(nvidia_data["Date"])
@@ -41,7 +48,7 @@ nvidia_data['Log_Volume'] = np.log(nvidia_data['Volume'])
 nvidia_data.drop(columns=["Volume"], inplace=True)
 #print(nvidia_data.head())
 
-#normalizing the data -> all data between 0 & 1
+#normalizing the preprocessing -> all preprocessing between 0 & 1
 scaler = MinMaxScaler()
 scaled_values = scaler.fit_transform(nvidia_data[nvidia_data.columns])
 print(scaled_values)
@@ -115,7 +122,9 @@ history = model.fit(X_train, y_train,
                     epochs=20,
                     batch_size=3,
                     callbacks=[early_stopping]) #early stopping prevents overfitting
-#Making predictions on the test data
+
+
+#Making predictions on the test preprocessing
 predictions = model.predict(X_test)
 
 #Inverse scaling to get the original values
@@ -125,7 +134,7 @@ y_test_rescaled = scaler.inverse_transform(y_test)
 #Plotting the results
 plt.figure(figsize=(14, 7))
 
-#plotting on test data, existing days
+#plotting on test preprocessing, existing days
 for i, col in enumerate(nvidia_data_scaled.columns):
     plt.subplot(2, 3, i+1)
     plt.plot(y_test_rescaled[:, i], color="blue", label=f"Actual {col}")
@@ -174,25 +183,35 @@ future_dates = pd.date_range(start=nvidia_data_scaled.index[-1], periods=future_
 # Convert future predictions (numpy array) into a pandas DataFrame with the future dates as the index
 future_predictions_df = pd.DataFrame(future_predictions, columns=nvidia_data.columns, index=future_dates)
 
-# Plot actual and predicted values
-plt.figure(figsize=(14, 7))
+# Improved Plotting for Actual and Future Predictions
+plt.figure(figsize=(16, 10))
 
-for i, col in enumerate(nvidia_data_scaled.columns):
+# Focus on the last 30 days before the prediction and the 10 future days
+past_days = 30
+
+for i, col in enumerate(nvidia_data.columns):
     plt.subplot(2, 3, i + 1)
 
-    # Plot actual values in green
-    plt.plot(nvidia_data.index, nvidia_data[col], color="green", label=f"Actual {col}")
+    # Plot actual values in green for the last 30 days
+    past_start_date = nvidia_data.index[-1] - pd.Timedelta(days=past_days)
+    plt.plot(nvidia_data.loc[past_start_date:].index, nvidia_data.loc[past_start_date:][col], color="green", label="Actual", linewidth=2)
 
-    # Plot predicted values in yellow starting from the last actual date
-    plt.plot(future_predictions_df.index, future_predictions_df[col], color="brown", label=f"Predicted {col}", linestyle='--')
+    # Plot predicted values in brown starting from the last actual date
+    plt.plot(future_predictions_df.index, future_predictions_df[col], color="brown", linestyle='', marker='o', label="Predicted", linewidth=2)
 
-    # Add labels and title
-    plt.title(f"{col} Future Price Over Time")
-    plt.xlabel("Time")
-    plt.ylabel(f"{col} Predicted Price")
-    plt.legend()
+    # Mark transition point
+    plt.axvline(x=nvidia_data.index[-1], color="blue", linestyle=":", linewidth=1, label="Prediction Start")
 
-    plt.xlim([nvidia_data.index.min(), pd.Timestamp("2023-12-31")])
+    # Add labels, title, and grid
+    plt.title(f"{col} Future Price Over Time", fontsize=12, fontweight='bold')
+    plt.xlabel("Time", fontsize=10)
+    plt.ylabel(f"{col} Price", fontsize=10)
+    plt.grid(True, linestyle='--', alpha=0.5)
+    plt.legend(loc="best", fontsize=9)
 
+    # Set x-axis limits to focus on the past 30 days and future 10 days
+    plt.xlim([past_start_date, future_predictions_df.index[-1]])
+
+# Adjust layout and show the plot
 plt.tight_layout()
 plt.show()
