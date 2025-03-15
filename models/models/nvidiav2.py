@@ -7,16 +7,17 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.optimizers import Adam
 from datasets import load_nvidia_data
+import seaborn as sns
 
 #This actual state, model predicts on both historical text preprocessing and does also predictions on future days
 
 #Still needed:
 # - Here -> missing print best metrics after epochs
 # - apply LSTM on other datasets
-# - refine hyperparams for all datasets performance
-# - divide all parts (preprocessing, hyperparams, visualization, saving performances for showcase) into their repos and import them
+# - refine hparams for all datasets performance
+# - divide all parts (preprocessing, hparams, visualization, saving performances for showcase) into their repos and import them
 
-nvidia_data = load_nvidia_data()
+df = load_nvidia_data()
 
 """
 print(nvidia_data.shape, "\n")
@@ -29,6 +30,8 @@ print(nvidia_data.info(), "\n")
 """
 
 
+
+"""
 #converting "Date" col into "datetime"
 nvidia_data["Date"] = pd.to_datetime(nvidia_data["Date"])
 
@@ -131,7 +134,7 @@ predictions = model.predict(X_test)
 predictions = scaler.inverse_transform(predictions)
 y_test_rescaled = scaler.inverse_transform(y_test)
 
-#Plotting the results
+#Plotting the visualization
 plt.figure(figsize=(14, 7))
 
 #plotting on test preprocessing, existing days
@@ -215,3 +218,4 @@ for i, col in enumerate(nvidia_data.columns):
 # Adjust layout and show the plot
 plt.tight_layout()
 plt.show()
+"""

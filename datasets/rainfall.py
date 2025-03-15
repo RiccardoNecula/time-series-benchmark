@@ -11,7 +11,7 @@ def load_rainfall_data():
 import os
 import pandas as pd
 
-#New one, works for model as well
+#new one, works for model as well
 def load_rainfall_data():
     #creates absolute or relative path
     base_dir = os.path.dirname(os.path.abspath(__file__))  #gives current directory
