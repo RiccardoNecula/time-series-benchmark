@@ -2,8 +2,9 @@
 #old version, works for main
 import pandas as pd
 
-def load_romaniaTourism_data():
-    file_path = "datasets/csvdatasets/romaniaTourism.csv"
+def load_rainfall_data():
+    file_path = "datase
+    ts/csvdatasets/rainfall.csv"
     preprocessing = pd.read_csv(file_path)
     return preprocessing
 """
@@ -11,11 +12,11 @@ def load_romaniaTourism_data():
 import os
 import pandas as pd
 
-#new one, works for model as well
-def load_romaniaTourism_data():
+#New one, works for model as well
+def load_maxtemperature_data():
     #creates absolute or relative path
     base_dir = os.path.dirname(os.path.abspath(__file__))  #gives current directory
-    file_path = os.path.join(base_dir, "csvdatasets", "romaniaTourism.csv")
+    file_path = os.path.join(base_dir, "csvdatasets", "max-temperatures.csv")
 
     if not os.path.exists(file_path):
         raise FileNotFoundError(
