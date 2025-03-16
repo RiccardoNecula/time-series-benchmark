@@ -27,7 +27,6 @@ def plot_timeSeriesSplit(df, numero_dataset):
     plt.tight_layout()
     plt.show() #rolling mean and rolling standard aren't constant but they are close to each other
 
-    N_SPLITS = 3
 
     X = df['date']
     y = target
@@ -37,7 +36,6 @@ def plot_timeSeriesSplit(df, numero_dataset):
     y_min = y.min()
     y_max = y.max()
 
-    folds = TimeSeriesSplit(n_splits=N_SPLITS)
 
     N_SPLITS = 5  # Numero di split
     folds = TimeSeriesSplit(n_splits=N_SPLITS)
