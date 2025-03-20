@@ -75,5 +75,5 @@ plt.show()
 
 
 # Test di stazionarietà - Dickey-Fuller aumentato
-print("Test di Stazionarietà:")
+print("Test di Stazionarietà del dataset rainfall:")
 test_stationarity(rainfall_data['rainfall'])

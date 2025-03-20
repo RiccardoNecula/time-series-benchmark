@@ -25,7 +25,7 @@ def plot_iniziale(df):
         ax.set_xlim([x_min, x_max])
 
         plt.title(f'Feature target: {value_column}', fontsize=14)
-        plt.xlabel(date_column, fontsize=14)
+        plt.xlabel("Periodo", fontsize=14)
         plt.ylabel(value_column, fontsize=14)
 
         step = len(df['date']) // 10

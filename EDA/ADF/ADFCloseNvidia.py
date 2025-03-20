@@ -68,7 +68,7 @@ plt.show()
 
 
 
-print("Test di Stazionarietà:")
+print("Test di Stazionarietà del dataset Nvidia:")
 test_stationarity(nvidia_data['Close'])
 
 # Apply log transformation (to stabilize variance)

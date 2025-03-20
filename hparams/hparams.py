@@ -1,16 +1,17 @@
 #contenitore di hparams
 
 Auto_arima_params = {
-    "seasonal" : False,
+    "seasonal" : True,
     "stepwise" : True,
     "trace" : True,
-    "suppress_warning" : True
+    "suppress_warning" : True,
+    "test": "adf"
 }
 
 
 LSTM_grid_params = {
     'unit1_min': 32,
-    'unit1_min': 256,
+    'unit1_max': 256,
     'unit1_step': 32,
 
     'unit2_min': 32,
@@ -23,21 +24,21 @@ LSTM_grid_params = {
 
     'learning_rate_min': 0.01,
     'learning_rate_max': 0.1,
-    'learning_rate_step': 0.5,
+    'learning_rate_step': 0.03,
 }
 
 
 ETS_smoothing_params = {
-    "trend": ["add", "mul", None],
-    "seasonal": ["add", "mul", None],
-    "seasonal_periods": [12],
+    "trend": ["add", "mul"],
+    "seasonal": ["add", "mul"],
+    "seasonal_periods": [7],
     "damped_trend": [True, False]
 }
 
 
 Prophet_grid_params = {
-    'changepoint_prior_scale': [0.01, 0.1, 0.5, 1.0, 10.0],
-    'seasonality_prior_scale': [0.01, 0.1, 1.0, 10.0],
+    'changepoint_prior_scale': [0.01, 0.05],
+    'seasonality_prior_scale': [0.2, 0.3],
     'weekly_seasonality': [True, False]
 }
 

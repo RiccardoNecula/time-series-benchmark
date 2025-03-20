@@ -46,6 +46,7 @@ residual = decomposition.resid
 
 # Visualizzazione della decomposizione
 plt.figure(figsize=(15, 8))
+plt.suptitle("Decomposizione della Serie Temporale", fontsize=16)
 plt.subplot(411)
 plt.plot(maxtemperature_data['Temperature'], label='Originale', color='dodgerblue')
 plt.legend(loc='best')
@@ -58,6 +59,7 @@ plt.legend(loc='best')
 plt.subplot(414)
 plt.plot(residual, label='Residuo', color='dodgerblue')
 plt.legend(loc='best')
+
 plt.tight_layout()
 plt.show()
 
@@ -74,5 +76,5 @@ plt.legend()
 plt.show()
 
 
-print("Test di Stazionarietà:")
+print("Test di Stazionarietà del dataset max-temperature:")
 test_stationarity(maxtemperature_data['Temperature'])

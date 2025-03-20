@@ -61,7 +61,7 @@ def LSTM_model(df):
 
 
 
-    #GRID SEARCH CON KERAS TUNER
+    #GRID SEARCH CON numero di unità nel aye TUNER
     def build_model(hp):
         model = Sequential()
         model.add(LSTM(
@@ -95,7 +95,7 @@ def LSTM_model(df):
 
     model = tuner.hypermodel.build(best_hps)
 
-    model.fit(x_train, y_train, batch_size=1, epochs=5, validation_data=(x_test, y_test))
+    model.fit(x_train, y_train, batch_size=16, epochs=5, validation_data=(x_test, y_test))
     model.summary()
 
     train_predict = model.predict(x_train)

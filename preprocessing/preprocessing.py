@@ -1,4 +1,6 @@
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+
 def Preprocessing(df):
 
     print("\nLe prossime scritture ti daranno delle informazioni iniziali sul dataset scelto.")
@@ -15,7 +17,7 @@ def Preprocessing(df):
 
     #Missing Values
 
-    print("\nVisualizzazione di eventuali valori nulli per colonna:\n", df.isna().sum())
+    print("\nVisualizzazione di eventuali valori NaN per colonna:\n", df.isna().sum())
 
     """
     df = df.sort_values(by='date')
@@ -25,3 +27,14 @@ def Preprocessing(df):
     print("\nSe il dataset non è uniforme nelle misurazioni, i due valori seguenti risulteranno diversi:"
           "\n--->", df['delta'].sum(), "|", (df['delta'].count())) #primo valore ha delta NaN
     """
+
+    # **Normalizzazione (scaling tra 0 e 1)**
+    #scaler = MinMaxScaler(feature_range=(0, 1))
+
+    # Applica lo scaler solo alle colonne numeriche (escludendo 'date' e 'delta')
+    #numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns
+    #df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
+
+    #print("\nDataset scalato tra 0 e 1:\n", df)
+
+    #return df

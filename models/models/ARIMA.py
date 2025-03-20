@@ -65,7 +65,7 @@ def ARIMA_model(df):
 
     # Calcolo automatico dei parametri ottimali (p, d, q)
     auto_model = auto_arima(y_train, seasonal=Auto_arima_params["seasonal"], stepwise=Auto_arima_params["stepwise"], trace=Auto_arima_params["trace"],
-                            suppress_warnings=Auto_arima_params["suppress_warning"])
+                            suppress_warnings=Auto_arima_params["suppress_warning"], test=Auto_arima_params["test"])
 
     best_order = auto_model.order  # Estrarre i migliori (p, d, q)
     print(f"Migliori parametri trovati da auto_arima: {best_order}")

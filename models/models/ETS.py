@@ -12,7 +12,7 @@ def ETS_model(df):
     # Selezione metrica utente
     metrica_sel = seleziona_metriche()
 
-    # Controllo se il dataset è univariato o multivariato
+    # Controllo se il dataset è univariate o multivariate
     if len(df.columns) == 2:
         train_size = int(0.85 * len(df))
 

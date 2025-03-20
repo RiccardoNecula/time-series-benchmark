@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from prophet import Prophet
+from prophet.diagnostics import cross_validation
 from sklearn.model_selection import ParameterGrid
 from sklearn.metrics import mean_absolute_error
 
@@ -74,11 +75,33 @@ def Prophet_model(df):
     print(f"\nMigliori iperparametri trovati: {best_params}")
     #print(f"MAE migliore: {best_mae:.4f}")
 
+    # Aggiungo la cross-validation
+    df_cv = cross_validation(best_model, initial='365 days', period='90 days', horizon='30 days')
+    y_pred = df_cv.copy()
+
     # Ricalcoliamo la previsione finale con il miglior modello**
     y_pred = best_model.predict(valid)
+    train_pred = best_model.predict(train)
+
+    train_score_mae, train_score_mse, train_score_rmse, train_score_mape = evaluate_model(train['y'], train_pred["yhat"])
 
     # Calcoliamo tutte le metriche**
     score_mae, score_mse, score_rmse, score_mape = evaluate_model(valid['y'], y_pred.tail(test_size)["yhat"])
+
+    print("\n📊 Metriche su Training Set:")
+    print('📊 MAE:', train_score_mae)
+    print('📊 MSE:', train_score_mse)
+    print('📊 RMSE:', train_score_rmse)
+    print('📊 MAPE:', train_score_mape)
+
+    # Già calcolate sul test set, ora stampiamole di nuovo per il confronto
+    print("\n📊 Metriche su Test Set:")
+    print('📊 MAE:', score_mae)
+    print('📊 MSE:', score_mse)
+    print('📊 RMSE:', score_rmse)
+    print('📊 MAPE:', score_mape)
+
+
 
     metric_scores = {
         "MAE": score_mae,
